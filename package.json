@@ -1,0 +1,52 @@
+{
+  "name": "@sdnly/wave-mcp-server",
+  "version": "0.1.0",
+  "description": "Unofficial MCP server for Wave (waveapps.com) invoicing: customers, invoices, products and payments, with a preview-then-confirm step for anything that sends or records money.",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "wave",
+    "waveapps",
+    "invoicing",
+    "claude"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoyodyne7/wave-mcp-server.git"
+  },
+  "type": "module",
+  "bin": {
+    "wave-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  },
+  "homepage": "https://github.com/yoyodyne7/wave-mcp-server#readme",
+  "bugs": {
+    "url": "https://github.com/yoyodyne7/wave-mcp-server/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
