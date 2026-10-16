@@ -1,6 +1,6 @@
 {
   "name": "@sdnly/wave-mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unofficial MCP server for Wave (waveapps.com) invoicing: customers, invoices, products and payments, with a preview-then-confirm step for anything that sends or records money.",
   "license": "MIT",
   "keywords": [

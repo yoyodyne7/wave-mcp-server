@@ -77,18 +77,44 @@ in between.
 
 There are no delete tools. Deletions, payment edits, estimates and expenses stay in Wave.
 
-## Safety notes
+## Security and privacy
 
-- **Keep the four gated tools on "ask every time".** The preview step proves a preview was
-  requested, not that you read it; your approval of the confirming call in your client's
-  permission prompt is the real checkpoint. If you allow-list tools to cut down prompts,
-  allow-list only the eight read tools, never `mcp__wave__*` as a whole.
+Read this before pointing the server at real books.
+
+- **The token is a master key.** A Wave Full Access Token can read and change every business
+  in your Wave account, not just the one in `WAVE_BUSINESS_ID`, and it lasts for years. The
+  one-business limit is enforced by this server, not by Wave; anything else that gets hold of
+  the token has no such limit. Where the token lives:
+  - With `claude mcp add -e` or a Desktop config, it is stored in plain text in that client's
+    config file (for Claude Code, `~/.claude.json`).
+  - With a clone, it is in `.env`. Keep that file `chmod 600` and out of git.
+
+  Either way, any program running as your user can read it. If your computer is lost or
+  compromised, revoke the token in the Wave developer portal (Manage Applications) first.
+- **Your Wave data goes to your AI provider.** Everything a tool returns (customer names,
+  emails, addresses, invoice amounts) becomes part of the conversation and is sent to
+  whichever model your client uses. Check that this fits your privacy obligations to your
+  own customers.
+- **Your approval is the safety net.** Text the assistant reads elsewhere in a session (an
+  email, a web page, a document) can try to instruct it to create, approve or send invoices.
+  Keep every write and gated tool on "ask every time", and read the preview before approving
+  a gated call. The preview step proves a preview was requested, not that you read it. If you
+  allow-list tools to cut down prompts, allow-list only the eight read tools, never
+  `mcp__wave__*` as a whole.
+- **Pin the version.** `npx -y @sdnly/wave-mcp-server` runs the newest published release.
+  For books you care about, pin one you have reviewed, e.g.
+  `npx -y @sdnly/wave-mcp-server@0.1.1`, or run from a clone.
+- The server talks only to Wave's API (`https://gql.waveapps.com/graphql/public`) over HTTPS.
+  It sends no telemetry and writes nothing to disk, and it strips the token from error
+  messages.
+
+## Usage notes
+
 - The server acts only on `WAVE_BUSINESS_ID`. No tool accepts a business id.
 - Writes are never retried. If a write times out, check the invoice in Wave before retrying.
 - Tax on invoice lines: omit `sales_tax_ids` to use the product's default taxes; pass `[]`
   for no tax (zero-rated or export clients).
-- Tokens last years but can be revoked in the portal. On "Wave rejected the access token",
-  create a new token and update your configuration.
+- On "Wave rejected the access token", create a new token and update your configuration.
 
 ## Status
 
